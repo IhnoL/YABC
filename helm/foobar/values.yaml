@@ -1,0 +1,19 @@
+apps:
+- name: "foo"
+  port: 5050
+  image: "icidenton/foo"
+  servicetype: "NodePort"
+  nodePort: 30050
+  env:
+  - name: BAR_URL
+    value: "http://bar-service:6060"
+  - name: FOO_PORT
+    value: "5050"
+
+- name: "bar"
+  port: 6060
+  image: "icidenton/bar"
+  servicetype: "ClusterIP"
+  env:
+  - name: BAR_PORT
+    value: "6060"

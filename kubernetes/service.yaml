@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: foo-service
+spec:
+  type: NodePort
+  selector:
+    name: foo
+  ports:
+    - port: 5050 # only accessible from inside of the cluster
+      targetPort: 5050 # port on the foo app
+      nodePort: 30050 # accessible from outside of the cluster
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: bar-service
+spec:
+  type: ClusterIP
+  selector:
+    name: bar
+  ports:
+    - port: 6060
+      targetPort: 6060

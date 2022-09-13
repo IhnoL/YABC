@@ -1,0 +1,18 @@
+version: "3.3"
+services:
+  foo-service:
+    build: ./foo
+    image: icidenton/foo
+    ports:
+      - "5050:5050"
+    environment:
+    - FOO_PORT=5050
+    - BAR_URL=http://bar-service:6060
+
+  bar-service:
+    build: ./bar
+    image: icidenton/bar
+    ports:
+      - "6060:6060"
+    environment:
+    - BAR_PORT=6060

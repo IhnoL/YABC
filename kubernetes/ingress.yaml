@@ -1,0 +1,28 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: fancy-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/default-backend: ingress-nginx-controller
+    nginx.ingress.kubernetes.io/rewrite-target: / # '/foo' gets rewritten to '/' 
+spec:
+  ingressClassName: nginx
+  rules:
+  - http:
+      paths:
+      - path: /foo
+        pathType: Prefix
+        backend:
+          service:
+            name: foo-service
+            port:              
+              number: 5050
+  - http:
+      paths:
+      - path: /bar
+        pathType: Prefix
+        backend:
+          service:
+            name: bar-service
+            port:
+              number: 6060

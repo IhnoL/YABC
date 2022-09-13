@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fancy-foo-deployment
+spec:
+  selector:
+    matchLabels:     
+      name: foo  # used for identification by a service
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: foo
+    spec:
+      containers:
+      - name: foo-container
+        image: icidenton/foo
+        env:
+        - name: BAR_URL
+          value: "http://bar-service:6060"
+        - name: FOO_PORT
+          value: "5050"
+        ports:
+        - containerPort: 5050
+        resources:
+          limits:
+            memory: "64Mi"
+            cpu: "100m"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fancy-bar-deployment
+spec:
+  selector:
+    matchLabels:
+      name: bar
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: bar
+    spec:
+      containers:
+      - name: bar-container
+        image: icidenton/bar
+        env:
+        - name: BAR_PORT
+          value: "6060"
+        ports:
+        - containerPort: 6060
+        resources:
+          limits:
+            memory: "64Mi"
+            cpu: "100m"
